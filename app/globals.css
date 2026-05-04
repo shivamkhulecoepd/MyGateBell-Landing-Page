@@ -1,0 +1,243 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+.dark {
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: var(--background);
+  color: var(--textPrimary);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  text-rendering: optimizeLegibility;
+  background-image:
+    linear-gradient(to bottom, var(--overlay), transparent 20%),
+    linear-gradient(to right, var(--gridLine) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--gridLine) 1px, transparent 1px);
+  background-size: auto, 72px 72px, 72px 72px;
+  background-position: 0 0, center top, center top;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+::selection {
+  background: var(--accentSoft);
+}
+
+main {
+  position: relative;
+  isolation: isolate;
+}
+
+main::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at top left, var(--accentSoft), transparent 26%),
+    radial-gradient(circle at bottom right, var(--accentStrong), transparent 24%);
+  opacity: 1;
+  pointer-events: none;
+  z-index: -1;
+}
+
+[data-reveal] {
+  opacity: 0;
+  transition-property: opacity, transform, filter;
+  transition-duration: 820ms;
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform, opacity;
+}
+
+[data-reveal='visible'] {
+  opacity: 1;
+  filter: blur(0);
+}
+
+[data-reveal-variant='up'] {
+  transform: translate3d(0, 26px, 0);
+  filter: blur(8px);
+}
+
+[data-reveal-variant='down'] {
+  transform: translate3d(0, -26px, 0);
+  filter: blur(8px);
+}
+
+[data-reveal-variant='left'] {
+  transform: translate3d(30px, 0, 0);
+  filter: blur(8px);
+}
+
+[data-reveal-variant='right'] {
+  transform: translate3d(-30px, 0, 0);
+  filter: blur(8px);
+}
+
+[data-reveal-variant='scale'] {
+  transform: scale(0.97);
+  filter: blur(8px);
+}
+
+[data-reveal='visible'][data-reveal-variant] {
+  transform: translate3d(0, 0, 0) scale(1);
+  filter: blur(0);
+}
+
+.panel {
+  border: 1px solid var(--border);
+  background-color: var(--surface);
+  box-shadow: var(--shadowSoft);
+}
+
+.panel-muted {
+  border: 1px solid var(--border);
+  background-color: var(--surfaceMuted);
+  box-shadow: var(--shadowInset);
+}
+
+.panel-elevated {
+  border: 1px solid var(--border);
+  background-color: var(--surfaceElevated);
+  box-shadow: var(--shadowStrong);
+}
+
+.eyebrow-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  padding: 0.625rem 0.9rem;
+  background-color: var(--accentSoft);
+  color: var(--primary);
+}
+
+.section-line {
+  height: 1px;
+  width: 100%;
+  background-image: linear-gradient(to right, transparent, var(--border), transparent);
+}
+
+.micro-grid {
+  background-image:
+    linear-gradient(to right, var(--gridLine) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--gridLine) 1px, transparent 1px);
+  background-size: 18px 18px;
+}
+
+.subtle-mask {
+  position: relative;
+  overflow: hidden;
+}
+
+.subtle-mask::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent, var(--overlay));
+  pointer-events: none;
+}
+
+@keyframes driftY {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -10px, 0);
+  }
+}
+
+@keyframes driftX {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(8px, 0, 0);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-drift-y {
+  animation: driftY 8s ease-in-out infinite;
+}
+
+.animate-drift-x {
+  animation: driftX 10s ease-in-out infinite;
+}
+
+.animate-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.animate-shimmer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(to right, transparent, var(--overlay), transparent);
+  animation: shimmer 4.5s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  [data-reveal] {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    transition: none;
+  }
+
+  .animate-drift-y,
+  .animate-drift-x,
+  .animate-shimmer::after {
+    animation: none;
+  }
+}
